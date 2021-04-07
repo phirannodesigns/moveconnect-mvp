@@ -1,0 +1,53 @@
+{
+  "address": {
+    "googleMaps": "",
+    "line1": "",
+    "line2": ""
+  },
+  "email": "",
+  "hrefLang": "en-AU",
+  "openingHours": [
+    {
+      "days": "Monday – Friday",
+      "hours": "9am to 5:00pm"
+    },
+    {
+      "days": "Weekends",
+      "hours": "Closed"
+    }
+  ],
+  "phone": "",
+  "shortName": "",
+  "siteDescription": "",
+  "siteImage": "/og-image.png",
+  "siteNavigation": [
+    {
+      "label": "Solutions",
+      "slug": "/"
+    },
+    {
+      "label": "Pricing",
+      "slug": "/"
+    },
+    {
+      "label": "Docs",
+      "slug": "/"
+    },
+    {
+      "label": "More",
+      "slug": "/"
+    }
+  ],
+  "siteTitle": "Site Title",
+  "siteUrl": "https://example.com/",
+  "socialLinks": [
+    {
+      "link": "https://www.facebook.com/",
+      "socialNetwork": "Facebook"
+    },
+    {
+      "link": "https://www.instagram.com/",
+      "socialNetwork": "Instagram"
+    }
+  ]
+}
