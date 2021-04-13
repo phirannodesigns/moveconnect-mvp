@@ -1,4 +1,10 @@
+const dotenv = require('dotenv');
+
 const config = require('./config.json');
+
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 module.exports = {
   siteMetadata: {
