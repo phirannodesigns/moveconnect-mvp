@@ -1,18 +1,17 @@
 import * as React from 'react';
 
-import { ContactForm } from '../components/contact-form';
 import { Layout } from '../components/layout';
 import { SEO } from '../components/seo';
 
-function IndexPage(): React.ReactElement {
+function NotFoundPage(): React.ReactElement {
   return (
     <Layout>
       <div className="w-full px-4 py-12 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
-        <SEO title="Moveconnect MVP" />
-        <ContactForm />
+        <SEO title="404: Page Not Found" />
+        <h1>404: Page Not Found</h1>
       </div>
     </Layout>
   );
 }
 
-export default IndexPage;
+export default NotFoundPage;
