@@ -1,6 +1,16 @@
 const fetch = require('node-fetch');
+const { nanoid } = require('nanoid')
 
-const API_ENDPOINT = 'https://jsonplaceholder.typicode.com/posts';
+const API_ENDPOINT = 'https://rest.moveconnect.com/movewareUAT/v1/jobs';
+
+const headers = {
+  'mw-correlation-id': nanoid(),
+  'mw-company-id': '34501',
+  'mw-username': 'pmapi',
+  'mw-password': 'yta6-$_g7z_XW8h',
+  'mw-request-id': nanoid(),
+  'Content-Type': 'application/json',
+}
 
 exports.handler = async (event) => {
   const {
@@ -59,9 +69,7 @@ exports.handler = async (event) => {
   return fetch(API_ENDPOINT, {
   method: 'POST',
   body: data,
-  headers: {
-    'Content-type': 'application/json; charset=UTF-8',
-  },
+  headers,
 })
   .then((response) => response.json())
   // eslint-disable-next-line no-console
