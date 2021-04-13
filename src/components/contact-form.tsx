@@ -69,37 +69,16 @@ function ContactForm(): React.ReactElement {
           errors={errors}
         >
           {[
-            {
-              value: '',
-              label: '',
-            },
-            {
-              value: 'facebook',
-              label: 'Facebook',
-            },
-            {
-              value: 'google',
-              label: 'Google',
-            },
-            {
-              value: 'word_of_mouth',
-              label: 'Word of mouth',
-            },
-            {
-              value: 'friend',
-              label: 'Friend',
-            },
-            {
-              value: 'mailouts',
-              label: 'Mailouts',
-            },
-            {
-              value: 'other',
-              label: 'Other',
-            },
-          ].map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
+            '',
+            'Facebook',
+            'Google',
+            'Word of mouth',
+            'Friend',
+            'Mailouts',
+            'Other',
+          ].map((option) => (
+            <option key={option} value={option}>
+              {option}
             </option>
           ))}
         </Select>
