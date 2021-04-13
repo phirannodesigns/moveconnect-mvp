@@ -1,3 +1,4 @@
+/* eslint-disable no-console, sonarjs/no-identical-functions */
 import { navigate } from 'gatsby';
 import * as React from 'react';
 import {
@@ -12,31 +13,53 @@ function encode(data: Record<string, string | number | boolean>): string {
     .join('&');
 }
 
-async function postToNetlify(form, data) {
-  fetch('/', {
+async function postToNetlify(form, data, setIsLoading, setError) {
+  return fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: encode({
       'form-name': form.getAttribute('name'),
       ...data,
     }),
-  }) // eslint-disable-next-line no-console
-    .then((response) => console.log(response))
-    // eslint-disable-next-line no-alert
-    .catch((error) => alert(error));
+  })
+    .then((response) => {
+      console.log({ netlify: response });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (response.ok) {
+        return response;
+      }
+      setIsLoading(false);
+      return response;
+    })
+    .catch((error) => {
+      setError(String(error));
+      console.error(error);
+    });
 }
 
-async function postToMoveconnect(data) {
-  fetch('/.netlify/functions/moveconnect', {
+async function postToMoveconnect(data, setIsLoading, setError) {
+  return fetch('/.netlify/functions/moveconnect', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-  }) // eslint-disable-next-line no-console
-    .then((response) => console.log(response))
-    // eslint-disable-next-line no-alert
-    .catch((error) => alert(error));
+  })
+    .then((response) => {
+      console.log({ moveconnect: response });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (response.ok) {
+        return response;
+      }
+      setIsLoading(false);
+      return response;
+    })
+    .catch((error) => {
+      setError(String(error));
+      console.error(error);
+    });
 }
 
 interface INetlifyForm {
@@ -49,7 +72,10 @@ interface INetlifyForm {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onInvalid?: SubmitErrorHandler<Record<string, any>>
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+  error: string;
   name?: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function NetlifyForm(
@@ -58,7 +84,10 @@ function NetlifyForm(
     children,
     className,
     handleSubmit,
+    error,
     name = 'contact_form',
+    setIsLoading,
+    setError,
   }: INetlifyForm,
   rest: JSX.IntrinsicAttributes &
     React.ClassAttributes<HTMLFormElement> &
@@ -68,13 +97,22 @@ function NetlifyForm(
     event?.preventDefault();
     const form = event?.target;
 
-    // eslint-disable-next-line no-console
-    await postToNetlify(form, data).catch((error) => console.error(error));
+    setIsLoading(true);
 
-    // eslint-disable-next-line no-console
-    await postToMoveconnect(data).catch((error) => console.error(error));
+    await postToNetlify(form, data, setIsLoading, setError).catch((error_) => {
+      setError(String(error_));
+      console.error(error_);
+    });
 
-    await navigate(form.getAttribute('action'));
+    await postToMoveconnect(data, setIsLoading, setError).catch((error_) => {
+      setError(String(error_));
+      console.error(error_);
+    });
+
+    if (!error) {
+      setIsLoading(false);
+      await navigate(form.getAttribute('action'));
+    }
   });
   return (
     <form
