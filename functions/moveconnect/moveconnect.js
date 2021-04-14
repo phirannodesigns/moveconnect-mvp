@@ -3,11 +3,13 @@ const { nanoid } = require('nanoid');
 
 const API_ENDPOINT = 'https://rest.moveconnect.com/movewareUAT/v1/jobs';
 
+const { MW_COMPANY_ID, MW_USERNAME, MW_PASSWORD } = process.env;
+
 const headers = {
   'mw-correlation-id': nanoid(),
-  'mw-company-id': '34501',
-  'mw-username': 'pmapi',
-  'mw-password': 'yta6-$_g7z_XW8h',
+  'mw-company-id': MW_COMPANY_ID,
+  'mw-username': MW_USERNAME,
+  'mw-password': MW_PASSWORD,
   'mw-request-id': nanoid(),
   'Content-Type': 'application/json',
 };
