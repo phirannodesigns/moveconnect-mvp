@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { nanoid } = require('nanoid')
+const { nanoid } = require('nanoid');
 
 const API_ENDPOINT = 'https://rest.moveconnect.com/movewareUAT/v1/jobs';
 
@@ -10,11 +10,11 @@ const headers = {
   'mw-password': 'yta6-$_g7z_XW8h',
   'mw-request-id': nanoid(),
   'Content-Type': 'application/json',
-}
+};
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   const {
@@ -70,17 +70,19 @@ exports.handler = async (event) => {
     },
   });
 
-  return fetch(API_ENDPOINT, {
-  method: 'POST',
-  body: data,
-  headers,
-})
-  .then((response) => response.json())
-  // eslint-disable-next-line no-console
-  .then((json) => console.log(json))
-  .then((json) => ({
-    statusCode: 200,
-    body: JSON.stringify(json, null, 2),
-  }))
-  .catch((error) => ({ statusCode: 422, body: String(error) }));
+  return (
+    fetch(API_ENDPOINT, {
+      method: 'POST',
+      body: data,
+      headers,
+    })
+      .then((response) => response.json())
+      // eslint-disable-next-line no-console
+      .then((json) => console.log(json))
+      .then((json) => ({
+        statusCode: 200,
+        body: JSON.stringify(json, null, 2),
+      }))
+      .catch((error) => ({ statusCode: 422, body: String(error) }))
+  );
 };
